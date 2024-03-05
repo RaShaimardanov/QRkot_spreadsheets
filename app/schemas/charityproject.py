@@ -4,10 +4,15 @@ from typing import Optional
 from pydantic import BaseModel, Extra, Field
 
 
+MIN_LENGTH_FIELD = 1
+MAX_LENGTH_FIELD = 100
+GT_NULL_FIELD = 0
+
+
 class CharityProjectUpdate(BaseModel):
-    name: Optional[str] = Field(None, min_length=1, max_length=100)
-    description: Optional[str] = Field(None, min_length=1)
-    full_amount: Optional[int] = Field(None, gt=0)
+    name: Optional[str] = Field(None, min_length=MIN_LENGTH_FIELD, max_length=MAX_LENGTH_FIELD)
+    description: Optional[str] = Field(None, min_length=MIN_LENGTH_FIELD)
+    full_amount: Optional[int] = Field(None, gt=GT_NULL_FIELD)
 
     class Config:
         orm_mode = True
@@ -15,9 +20,9 @@ class CharityProjectUpdate(BaseModel):
 
 
 class CharityProjectCreate(CharityProjectUpdate):
-    name: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=1)
-    full_amount: int = Field(..., gt=0)
+    name: str = Field(..., min_length=MIN_LENGTH_FIELD, max_length=MAX_LENGTH_FIELD)
+    description: str = Field(..., min_length=MIN_LENGTH_FIELD)
+    full_amount: int = Field(..., gt=GT_NULL_FIELD)
 
 
 class CharityProjectDB(CharityProjectUpdate):
