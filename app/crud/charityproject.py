@@ -39,7 +39,13 @@ class CRUDCharityProject(CRUDBase):
         db_charityprojects = await session.execute(
             select(CharityProject).where(
                 CharityProject.fully_invested
-            ).order_by(extract('epoch', CharityProject.close_date) - extract('epoch', CharityProject.create_date))
+            ).order_by(
+                extract(
+                    'epoch', CharityProject.close_date
+                ) - extract(
+                    'epoch', CharityProject.create_date
+                )
+            )
         )
         return db_charityprojects.scalars().all()
 
